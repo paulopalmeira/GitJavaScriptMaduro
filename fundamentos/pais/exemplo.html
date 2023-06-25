@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exemplo de uso da API Rest Countries</title>
+</head>
+<body>
+  <div id="countryData"></div>
+
+  <script>
+    fetch('https://restcountries.com/v3.1/name/Brazil')
+      .then(response => response.json())
+      .then(data => {
+        const countryDataDiv = document.getElementById('countryData');
+        
+        // Percorra o array de objetos "data" e crie elementos HTML para cada campo
+        data.forEach(country => {
+          const countryName = country.name.common;
+          const countryCapital = country.capital[0];
+          const countryPopulation = country.population;
+          
+          // Crie elementos HTML e atribua os valores dos campos correspondentes
+          const countryInfoDiv = document.createElement('div');
+          countryInfoDiv.innerHTML = `
+            <h2>${countryName}</h2>
+            <p>Capital: ${countryCapital}</p>
+            <p>População: ${countryPopulation}</p>
+            <hr>
+          `;
+          
+          // Adicione o elemento HTML ao div principal
+          countryDataDiv.appendChild(countryInfoDiv);
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  </script>
+</body>
+</html>
